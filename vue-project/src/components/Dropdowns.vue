@@ -2,6 +2,9 @@
 
 </script>
 <template>
+    <div class="Title">
+        <h3>Állítsd össze a bevásárlólistád!</h3>
+    </div>
     <div class="Container">
         <!--Kategória-->
         <div class="dropdown">
@@ -33,6 +36,13 @@
     </div>
 </template>
 <style>
+    .Title{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-content: center;
+        margin-bottom: 2%;
+    }
     .Container{
         width: 100%;
         display: flex;

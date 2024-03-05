@@ -13,7 +13,7 @@
         justify-content: center;
         align-content: center;
         width: 100%;
-        margin-bottom: 5%;
+        margin-bottom: 2%;
         padding:2% 0%;
         background-color: #6E85B7;
         
