@@ -1,1 +1,5 @@
-
+#app{
+  background-color: #F8F9D7;
+  min-width: 100vw;
+  min-height: 100vh;
+}

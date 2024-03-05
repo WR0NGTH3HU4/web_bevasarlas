@@ -26,7 +26,7 @@
         </div>
         <!--Mennyiség-->
         
-        <input class="mennyiseg" type="number" placeholder="Enter a number">
+        <input class="mennyiseg" type="number" placeholder="Mennyiség">
         
     
   
