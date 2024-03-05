@@ -1,9 +1,7 @@
 <script setup>
-import TheWelcome from '../components/TheWelcome.vue'
+  import Dropdowns from '@/components/Dropdowns.vue';
 </script>
 
 <template>
-  <main>
-    <TheWelcome />
-  </main>
+  <Dropdowns></Dropdowns>
 </template>
