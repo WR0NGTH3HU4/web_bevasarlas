@@ -16,6 +16,6 @@
         margin-bottom: 2%;
         padding:2% 0%;
         background-color: #6E85B7;
-        
+        color: white;
     }
 </style>
