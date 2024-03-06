@@ -5,7 +5,7 @@ import { onMounted } from 'vue';
 
 let Termekek =ref(null) 
 let Kategoriak = ref([])
-
+let Termeknev = ref([])
 onMounted(async() => {
     axios.get('http://localhost:3000/termekek',{
         timeout: 5000
@@ -19,7 +19,15 @@ onMounted(async() => {
         }
     });
 })
-
+const click = (item) => {
+    Termeknev.value = []; // Initialize Termeknev as an empty array before populating it
+    Termekek.value.forEach((termek) => {
+        if (termek.category === item) {
+            Termeknev.value.push(termek.productname);
+        }
+    });
+    
+}
  
 
 </script>
@@ -31,12 +39,12 @@ onMounted(async() => {
     <div class="Container">
         <!--Kategória-->
         <div class="dropdown">
-            <button class="kategoria btn btn-secondary dropdsown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <button class="kategoria btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Kategória
             </button>
             <ul class="dropdown-menu">
                 <!--v-for-->
-                <li @click.prevent="click(item)" v-for="item in Kategoriak" :key="item" ><a class="dropdown-item" >{{item}}</a></li>
+                <li @click.prevent="click(item)" v-for="item in Kategoriak" ><a class="dropdown-item" >{{item}}</a></li>
             </ul>
         </div>
 
@@ -47,7 +55,7 @@ onMounted(async() => {
             </button>
             <ul class="dropdown-menu">
                 <!--v-for-->
-                <li><a class="dropdown-item" >Valamilyen terméknév</a></li>
+                <li v-for="element in Termeknev"><a class="dropdown-item" >{{ element }}</a></li>
             </ul>
         </div>
         <!--Mennyiség-->
