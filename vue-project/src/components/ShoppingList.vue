@@ -1,5 +1,6 @@
-<script>
-
+<script setup>
+    import Trash from "./Trash.vue"
+    import TrashActive from "./TrashActive.vue"
 </script>
 <template>
     <div class="container">
@@ -8,11 +9,14 @@
             <li>kategoria</li>
             <li>termeknev</li>
             <li>mennyiseg</li>
+            <Trash class="headTrash"></Trash>
         </ul>
         <ul class="context">
             <li>kategoria</li>
             <li>termeknev</li>
             <li>mennyiseg</li>
+            <TrashActive class="ActiveTrash"></TrashActive>
+            
         </ul>
 
     </div>
@@ -43,6 +47,11 @@
         color: white;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
+    .headTrash{
+        width: 2%;
+        height: 2%;
+        
+    }
     .context{
         list-style: none;
         display: flex;
@@ -53,7 +62,17 @@
         border-radius: 20px;
         color: white;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
 
+    }
+    .ActiveTrash{
+        width: 2%;
+        height: 2%;
+    }
+    .ActiveTrash:hover{
+        background-color: white;
+        border-radius: 100%;
+        padding:2px;
+        box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
+    }
 
 </style>

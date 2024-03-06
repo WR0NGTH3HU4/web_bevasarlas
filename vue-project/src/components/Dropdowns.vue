@@ -30,7 +30,7 @@
         </div>
         <!--Mennyiség-->
         
-        <input class="mennyiseg" type="number" placeholder="Mennyiség">
+        <input class="mennyiseg" type="number" placeholder="Mennyiség" min="1">
         
         <!--Felvesz button-->
         <button class="btn felvesz btn-success" type="button">Felvesz +</button>
