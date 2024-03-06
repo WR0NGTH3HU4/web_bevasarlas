@@ -2,15 +2,16 @@ GET http://localhost:3000
 
 ###
 
-GET http://localhost:3000/employees
+GET http://localhost:3000
+
 
 ###
 
-GET http://localhost:3000/employees/2
+GET http://localhost:3000
 
 ###
 
-POST http://localhost:3000/employees
+POST http://localhost:3000
 content-type: application/json
 
 {
@@ -24,20 +25,18 @@ content-type: application/json
 
 ###
 
-PATCH http://localhost:3000/employees/7
+PATCH http://localhost:3000
 content-type: application/json
 
 {
-    "name" : "Sanyi", 	
-    "address" : "Baja", 	
-    "phone" : "06708888888", 	
-    "email" : "sanyi@gmail.com", 	
-    "post" : "főnök", 	
-    "price" : 14500	
+    "id" : "101", 	
+    "category" : "dairy", 	
+    "productname" : "noodles ramen", 	
+    "price" : "4200"
 }
 
 ###
 
-DELETE http://localhost:3000/employees/5
+DELETE http://localhost:3000
 
 ###
