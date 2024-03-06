@@ -1,5 +1,28 @@
 <script setup>
+    
+    import {ref} from "vue"
+    
 
+    const objects = [
+  { id: 1, type: 'A' },
+  { id: 2, type: 'B' },
+  { id: 3, type: 'C' },
+  { id: 4, type: 'A' },
+  { id: 5, type: 'B' },
+  { id: 6, type: 'D' },
+  { id: 7, type: 'A' }
+];
+
+const uniqueElements = objects.reduce((acc, obj) => {
+  if (!acc.includes(obj.type)) {
+    acc.push(obj.type);
+  }
+  return acc;
+}, []);
+    
+const click = (item) =>{
+    alert(item)
+}
 </script>
 <template>
     <div class="FullDropdown">
@@ -14,7 +37,7 @@
             </button>
             <ul class="dropdown-menu">
                 <!--v-for-->
-                <li><a class="dropdown-item" >Valamilyen kategória</a></li>
+                <li @click.prevemt="click(item)" v-for="item in uniqueElements" ><a class="dropdown-item" >{{item}}</a></li>
             </ul>
         </div>
 
@@ -30,7 +53,7 @@
         </div>
         <!--Mennyiség-->
         
-        <input class="mennyiseg" type="number" placeholder="Mennyiség">
+        <input class="mennyiseg" type="number" placeholder="Mennyiség" min="1">
         
         <!--Felvesz button-->
         <button class="btn felvesz btn-success" type="button">Felvesz +</button>
@@ -41,7 +64,7 @@
 <style>
     .FullDropdown{
         
-        background-color: #F8F9D7;
+        background-color: #F4EEFF;
         padding:1%;
         margin:0 10% 2% 10%;
         width: 80%;
@@ -62,7 +85,8 @@
         justify-content: space-evenly;
     }
     .kategoria{
-        background-color: #6E85B7;
+        border-style: none;
+        background-color: #747DAB;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
     .kategoria:hover{
@@ -70,15 +94,17 @@
         
     }
     .termeknev{
-        background-color: #6E85B7;
+        border-style: none;
+        background-color: #747DAB;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
     .termeknev:hover{
         background-color: #506183;
     }
     .mennyiseg{
+        border-style: none;
         padding:0px 10px;
-        border:#6E85B7 solid 5px;
+        border:#747DAB solid 5px;
         border-radius: 20px;
         outline:none;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
