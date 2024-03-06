@@ -6,12 +6,8 @@ import { onMounted } from 'vue';
 let Termekek =ref(null) 
 let Kategoriak = ref([])
 let Termeknev = ref([])
-interface ListRow{
-    Kategoria: string,
-    Termeknev: string,
-    Mennyiseg: int,
-    Ar: int
-}
+
+
 onMounted(async() => {
     axios.get('http://localhost:3000/termekek',{
         timeout: 5000
