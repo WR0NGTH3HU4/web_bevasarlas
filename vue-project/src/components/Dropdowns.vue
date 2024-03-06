@@ -10,7 +10,7 @@ let Termekek =ref([])
 
 onMounted(async() => {
     try {
-        const res = await axios.get('https://localhost:3000/termekek');
+        const res = await axios.get('http://localhost:3000/termekek');
         Termekek.value = res.data;
         console.log(Termekek.value);
     } catch (error) {
@@ -42,7 +42,7 @@ const click = (item) =>{
             </button>
             <ul class="dropdown-menu">
                 <!--v-for-->
-                <li  v-for="item in Termekek" ><a class="dropdown-item" >{{item.kategoria}}</a></li>
+                <li  v-for="item in Termekek" ><a class="dropdown-item" >{{item.category}}</a></li>
             </ul>
         </div>
 
