@@ -9,13 +9,13 @@ let Termekek =ref([])
 
 
 onMounted(async() => {
-    try {
-        const res = await axios.get('http://localhost:3000/termekek');
-        Termekek.value = res.data;
-        console.log(Termekek.value);
-    } catch (error) {
-        console.error('Error fetching data:', error);
-    }
+    axios.get('http://localhost:3000/termekek',{
+        timeout: 5000
+    })
+    const res = await axios.get('http://localhost:3000/termekek');
+    Termekek.value = res.data;
+    console.log(res.data);
+
 })
 
 /*const Kategoriak = Termekek.reduce((acc, obj) => {
