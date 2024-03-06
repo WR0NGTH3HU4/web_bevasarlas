@@ -1,12 +1,10 @@
 <script setup>
 import axios from 'axios'
-
 import {ref} from "vue"
 import { onMounted } from 'vue';
 
-let Termekek =ref([]) 
-
-
+let Termekek =ref(null) 
+let Kategoriak = ref([])
 
 onMounted(async() => {
     axios.get('http://localhost:3000/termekek',{
@@ -15,19 +13,15 @@ onMounted(async() => {
     const res = await axios.get('http://localhost:3000/termekek');
     Termekek.value = res.data;
     console.log(res.data);
-
+    Termekek.value.forEach((termek) => {
+        if(!Kategoriak.value.includes(termek.category)){
+            Kategoriak.value.push(termek.category)
+        }
+    });
 })
 
-/*const Kategoriak = Termekek.reduce((acc, obj) => {
-  if (!acc.includes(obj.type)) {
-    acc.push(obj.type);
-  }
-  return acc;
-}, []);
-    
-const click = (item) =>{
-    alert(item)
-}*/
+ 
+
 </script>
 <template>
     <div class="FullDropdown">
@@ -37,12 +31,12 @@ const click = (item) =>{
     <div class="Container">
         <!--Kategória-->
         <div class="dropdown">
-            <button class="kategoria btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <button class="kategoria btn btn-secondary dropdsown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Kategória
             </button>
             <ul class="dropdown-menu">
                 <!--v-for-->
-                <li  v-for="item in Termekek" ><a class="dropdown-item" >{{item.category}}</a></li>
+                <li @click.prevent="click(item)" v-for="item in Kategoriak" :key="item" ><a class="dropdown-item" >{{item}}</a></li>
             </ul>
         </div>
 
