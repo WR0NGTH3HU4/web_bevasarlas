@@ -1,19 +1,24 @@
 <script setup>
-    
-    import {ref} from "vue"
-    
+import axios from 'axios'
 
-    const objects = [
-  { id: 1, type: 'A' },
-  { id: 2, type: 'B' },
-  { id: 3, type: 'C' },
-  { id: 4, type: 'A' },
-  { id: 5, type: 'B' },
-  { id: 6, type: 'D' },
-  { id: 7, type: 'A' }
-];
+import {ref} from "vue"
+import { onMounted } from 'vue';
 
-const uniqueElements = objects.reduce((acc, obj) => {
+let Termekek =ref([]) 
+
+
+
+onMounted(async() => {
+    try {
+        const res = await axios.get('https://localhost:3000/termekek');
+        Termekek.value = res.data;
+        console.log(Termekek.value);
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+})
+
+/*const Kategoriak = Termekek.reduce((acc, obj) => {
   if (!acc.includes(obj.type)) {
     acc.push(obj.type);
   }
@@ -22,7 +27,7 @@ const uniqueElements = objects.reduce((acc, obj) => {
     
 const click = (item) =>{
     alert(item)
-}
+}*/
 </script>
 <template>
     <div class="FullDropdown">
@@ -37,7 +42,7 @@ const click = (item) =>{
             </button>
             <ul class="dropdown-menu">
                 <!--v-for-->
-                <li @click.prevemt="click(item)" v-for="item in uniqueElements" ><a class="dropdown-item" >{{item}}</a></li>
+                <li  v-for="item in Termekek" ><a class="dropdown-item" >{{item.kategoria}}</a></li>
             </ul>
         </div>
 
