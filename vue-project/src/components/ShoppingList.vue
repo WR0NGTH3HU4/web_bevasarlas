@@ -27,8 +27,8 @@
         flex-direction: column;
         justify-content: center;
         align-content: center;
-        background-color: #F8F9D7;
-        
+        background-color: #F4EEFF;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         padding: 1%;
         border-radius: 20px;
     }
@@ -37,18 +37,22 @@
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        background-color: #B2C8DF;
+        background-color: #8D97C6;
         padding: 1%;
         border-radius: 20px;
+        color: white;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
     .context{
         list-style: none;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        background-color: #C4D7E0;
+        background-color: #A6B1E1;
         padding: 1%;
         border-radius: 20px;
+        color: white;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 
 

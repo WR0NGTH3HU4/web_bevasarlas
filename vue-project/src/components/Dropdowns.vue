@@ -41,7 +41,7 @@
 <style>
     .FullDropdown{
         
-        background-color: #F8F9D7;
+        background-color: #F4EEFF;
         padding:1%;
         margin:0 10% 2% 10%;
         width: 80%;
@@ -62,7 +62,8 @@
         justify-content: space-evenly;
     }
     .kategoria{
-        background-color: #6E85B7;
+        border-style: none;
+        background-color: #747DAB;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
     .kategoria:hover{
@@ -70,15 +71,17 @@
         
     }
     .termeknev{
-        background-color: #6E85B7;
+        border-style: none;
+        background-color: #747DAB;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
     .termeknev:hover{
         background-color: #506183;
     }
     .mennyiseg{
+        border-style: none;
         padding:0px 10px;
-        border:#6E85B7 solid 5px;
+        border:#747DAB solid 5px;
         border-radius: 20px;
         outline:none;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
