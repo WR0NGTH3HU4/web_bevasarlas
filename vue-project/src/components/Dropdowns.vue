@@ -1,5 +1,28 @@
 <script setup>
+    
+    import {ref} from "vue"
+    
 
+    const objects = [
+  { id: 1, type: 'A' },
+  { id: 2, type: 'B' },
+  { id: 3, type: 'C' },
+  { id: 4, type: 'A' },
+  { id: 5, type: 'B' },
+  { id: 6, type: 'D' },
+  { id: 7, type: 'A' }
+];
+
+const uniqueElements = objects.reduce((acc, obj) => {
+  if (!acc.includes(obj.type)) {
+    acc.push(obj.type);
+  }
+  return acc;
+}, []);
+    
+const click = (item) =>{
+    alert(item)
+}
 </script>
 <template>
     <div class="FullDropdown">
@@ -14,7 +37,7 @@
             </button>
             <ul class="dropdown-menu">
                 <!--v-for-->
-                <li><a class="dropdown-item" >Valamilyen kategória</a></li>
+                <li @click.prevemt="click(item)" v-for="item in uniqueElements" ><a class="dropdown-item" >{{item}}</a></li>
             </ul>
         </div>
 
