@@ -6,6 +6,12 @@ import { onMounted } from 'vue';
 let Termekek =ref(null) 
 let Kategoriak = ref([])
 let Termeknev = ref([])
+interface ListRow{
+    Kategoria: string,
+    Termeknev: string,
+    Mennyiseg: int,
+    Ar: int
+}
 onMounted(async() => {
     axios.get('http://localhost:3000/termekek',{
         timeout: 5000
@@ -66,9 +72,26 @@ const click = (item) => {
         <button class="btn felvesz btn-success" type="button">Felvesz +</button>
   
     </div>
+    <div class="ChosenStuff">
+        <h5>Kategória: </h5>
+        <h5>Terméknév: </h5>
+        <h5>Mennyiség: </h5>
+    </div>
     </div>
 </template>
 <style>
+    .ChosenStuff{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        justify-items: center ;
+        align-content: center;
+        align-items: center;
+        background-color: #506183;
+        color: #F4EEFF;
+        margin-top: 2%;
+        border-radius: 20px;
+    }
     .FullDropdown{
         
         background-color: #F4EEFF;
