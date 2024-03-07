@@ -1,6 +1,11 @@
 <script setup>
     import Trash from "./Trash.vue"
     import TrashActive from "./TrashActive.vue"
+    import { inject } from "vue";
+    
+   
+    const NewRow = inject('NewRow')
+
 </script>
 <template>
     <div class="container">
@@ -17,6 +22,11 @@
             <li>mennyiseg</li>
             <TrashActive class="ActiveTrash"></TrashActive>
             
+        </ul>
+        <ul v-for="row in NewRow" :key="ID">
+            <li>{{row.Category}}</li>
+            <li>{{row.Productname}}</li>
+            <li>{{row.Amount}}</li>
         </ul>
 
     </div>

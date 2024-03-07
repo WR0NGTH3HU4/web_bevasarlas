@@ -2,11 +2,19 @@
 import axios from 'axios'
 import {ref} from "vue"
 import { onMounted } from 'vue';
+import {provide} from "vue"
+
 
 let Termekek =ref(null) 
 let Kategoriak = ref([])
 let Termeknev = ref([])
+let NewCategory = ref()
+let NewProduct = ref()
+let NewAmount = ref()
+let Amount = ref('')
 
+let NewRow = ref(null)  
+provide('NewRow',NewRow)
 
 onMounted(async() => {
     axios.get('http://localhost:3000/termekek',{
@@ -15,23 +23,39 @@ onMounted(async() => {
     const res = await axios.get('http://localhost:3000/termekek');
     Termekek.value = res.data;
     console.log(res.data);
-    Termekek.value.forEach((termek) => {
+    Termekek.value.forEach((termek) => {    
         if(!Kategoriak.value.includes(termek.category)){
             Kategoriak.value.push(termek.category)
         }
     });
 })
-const click = (item) => {
-    Termeknev.value = []; // Initialize Termeknev as an empty array before populating it
+const clickCat = (item) => {
+    Termeknev.value = [];
+
     Termekek.value.forEach((termek) => {
         if (termek.category === item) {
             Termeknev.value.push(termek.productname);
         }
     });
+    NewCategory= item
     
 }
- 
-
+const clickPro = (element) =>{
+    NewProduct.value = element
+}
+const OnEnter = (Amount) =>{
+    NewAmount.value = Amount
+    
+}
+const AddRow = () =>{
+    NewRow.value = []
+    NewRow.value.push({
+        Category: NewCategory,
+        Productname: NewProduct.value,
+        Amount : NewAmount.value
+    })
+    console.log(NewRow.value[0])
+}
 </script>
 <template>
     <div class="FullDropdown">
@@ -46,7 +70,7 @@ const click = (item) => {
             </button>
             <ul class="dropdown-menu">
                 <!--v-for-->
-                <li @click.prevent="click(item)" v-for="item in Kategoriak" ><a class="dropdown-item" >{{item}}</a></li>
+                <li @click.prevent="clickCat(item)" v-for="item in Kategoriak" ><a class="dropdown-item" >{{item}}</a></li>
             </ul>
         </div>
 
@@ -57,21 +81,21 @@ const click = (item) => {
             </button>
             <ul class="dropdown-menu">
                 <!--v-for-->
-                <li v-for="element in Termeknev"><a class="dropdown-item" >{{ element }}</a></li>
+                <li @click.prevent="clickPro(element)" v-for="element in Termeknev"><a class="dropdown-item" >{{element}}</a></li>
             </ul>
         </div>
         <!--Mennyiség-->
         
-        <input class="mennyiseg" type="number" placeholder="Mennyiség" min="1">
+        <input @keydown.enter="OnEnter(Amount)" v-model="Amount" class="mennyiseg" type="number" placeholder="Mennyiség" min="1">
         
         <!--Felvesz button-->
-        <button class="btn felvesz btn-success" type="button">Felvesz +</button>
+        <button @click.prevent="AddRow" class="btn felvesz btn-success" type="button">Felvesz +</button>
   
     </div>
     <div class="ChosenStuff">
-        <h5>Kategória: </h5>
-        <h5>Terméknév: </h5>
-        <h5>Mennyiség: </h5>
+        <h5>Kategória: {{NewCategory}}</h5>
+        <h5>Terméknév: {{NewProduct}}</h5>
+        <h5>Mennyiség: {{NewAmount}}</h5>
     </div>
     </div>
 </template>
@@ -84,7 +108,7 @@ const click = (item) => {
         align-content: center;
         align-items: center;
         background-color: #506183;
-        color: #F4EEFF;
+        color: white;
         margin-top: 2%;
         border-radius: 20px;
     }
