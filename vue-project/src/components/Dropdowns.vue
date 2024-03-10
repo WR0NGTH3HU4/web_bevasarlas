@@ -2,19 +2,20 @@
 import axios from 'axios'
 import {ref} from "vue"
 import { onMounted } from 'vue';
-import {provide} from "vue"
 
 
 let Termekek =ref(null) 
 let Kategoriak = ref([])
 let Termeknev = ref([])
-let NewCategory = ref()
-let NewProduct = ref()
-let NewAmount = ref()
 let Amount = ref('')
 
-let NewRow = ref(null)  
-provide('NewRow',NewRow)
+let NewCategory = ref(null)
+let NewProduct = ref(null)
+let NewAmount = ref(null)
+let NewPrice = ref(null)
+
+
+
 
 onMounted(async() => {
     axios.get('http://localhost:3000/termekek',{
@@ -37,25 +38,42 @@ const clickCat = (item) => {
             Termeknev.value.push(termek.productname);
         }
     });
-    NewCategory= item
+    NewCategory.value= item
     
 }
 const clickPro = (element) =>{
+    
     NewProduct.value = element
+
 }
 const OnEnter = (Amount) =>{
-    NewAmount.value = Amount
-    
+    NewAmount.value = Amount;
+
+    Termekek.value.forEach((termek) => {
+        if (termek.category === NewCategory.value && termek.productname === NewProduct.value) {
+            NewPrice.value = termek.price * Amount;
+            console.log(NewPrice.value);
+        }
+    });
+
+
 }
-const AddRow = () =>{
-    NewRow.value = []
-    NewRow.value.push({
-        Category: NewCategory,
-        Productname: NewProduct.value,
-        Amount : NewAmount.value
-    })
-    console.log(NewRow.value[0])
-}
+const AddRow = async () => {
+    try {
+        const response = await axios.post('http://localhost:3000/shoppingList', {
+            category: NewCategory.value, 
+            productname: NewProduct.value,
+            amount: NewAmount.value,
+            price: NewPrice.value
+        });
+        // Emit the "rowAdded" event after successful addition
+        window.location.reload();
+    } catch (error) {
+        console.error("An error occurred while adding row:", error);
+    }
+};
+
+
 </script>
 <template>
     <div class="FullDropdown">

@@ -1,8 +1,9 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 var mysql = require('mysql');
 const app = express();
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 
 var pool  = mysql.createPool({
     connectionLimit : 10,
@@ -15,6 +16,7 @@ var pool  = mysql.createPool({
 // MIDDLEWARES 
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
+app.use(cors());
 app.use(function(req,res, next){
     res.header("Access-Control-Allow-Origin", "http://localhost:5173")
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
@@ -30,6 +32,40 @@ app.get('/termekek', (req, res)=>{
         res.status(200).send(results);
     });
 });
+app.post('/shoppingList', (req, res) => {
+    const { category, productname, amount, price } = req.body;
+  
+    // Insert the received data into the database
+    pool.query('INSERT INTO shoppingList (category, productname, amount, price) VALUES (?, ?, ?, ?)', [category, productname, amount, price], (error, results, fields) => {
+      if (error) {
+        console.error("Error adding row to shopping list:", error);
+        res.status(500).send(error);
+      } else {
+        console.log("Row added to shopping list successfully");
+        res.status(201).send("Row added to shopping list successfully");
+      }
+    });
+  });
+
+app.get('/shoppingList', (req, res) =>{
+    pool.query(`SELECT * FROM shoppingList`, (error, results) =>{
+        if(error) res.status(500).send(error);
+        res.status(200).send(results)
+    })
+})
+app.delete('/shoppingList/:itemId',(req,res)=>{
+    const itemId = req.params.itemId;
+    // Perform the deletion operation in the database
+    pool.query('DELETE FROM shoppingList WHERE id = ?', [itemId], (error, results, fields) => {
+        if (error) {
+            console.error("Error deleting item:", error);
+            res.status(500).send(error);
+        } else {
+            console.log("Item deleted successfully:", itemId);
+            res.status(200).send(`Item with ID ${itemId} deleted successfully`);
+        }
+    });
+})
 
 app.listen(port, ()=>{
     console.log(`Server listening on port: ${port}...`);
