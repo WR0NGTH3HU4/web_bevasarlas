@@ -35,7 +35,7 @@ app.get('/termekek', (req, res)=>{
 app.post('/shoppingList', (req, res) => {
     const { category, productname, amount, price } = req.body;
   
-    // Insert the received data into the database
+    
     pool.query('INSERT INTO shoppingList (category, productname, amount, price) VALUES (?, ?, ?, ?)', [category, productname, amount, price], (error, results, fields) => {
       if (error) {
         console.error("Error adding row to shopping list:", error);
@@ -55,7 +55,7 @@ app.get('/shoppingList', (req, res) =>{
 })
 app.delete('/shoppingList/:itemId',(req,res)=>{
     const itemId = req.params.itemId;
-    // Perform the deletion operation in the database
+    
     pool.query('DELETE FROM shoppingList WHERE id = ?', [itemId], (error, results, fields) => {
         if (error) {
             console.error("Error deleting item:", error);

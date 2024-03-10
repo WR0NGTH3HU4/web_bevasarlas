@@ -66,7 +66,7 @@ const AddRow = async () => {
             amount: NewAmount.value,
             price: NewPrice.value
         });
-        // Emit the "rowAdded" event after successful addition
+        
         window.location.reload();
     } catch (error) {
         console.error("An error occurred while adding row:", error);
