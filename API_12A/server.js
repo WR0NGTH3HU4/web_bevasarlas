@@ -67,6 +67,46 @@ app.delete('/shoppingList/:itemId',(req,res)=>{
     });
 })
 
+
+
+app.put('/shoppingList/:itemId', (req, res) => {
+    const itemId = parseInt(req.params.itemId);
+    const { amount } = req.body;
+
+   
+    pool.query('SELECT price FROM shoppingList WHERE id = ?', [itemId], (error, results) => {
+        if (error) {
+            console.error("Error fetching original price:", error);
+            res.status(500).send(error);
+            return;
+        }
+        
+        if (results.length === 0) {
+            console.log("Item not found:", itemId);
+            res.status(404).send("Item not found");
+            return;
+        }
+
+        const unitPrice = results[0].price;
+        const totalPrice = unitPrice * amount;
+
+        
+        pool.query('UPDATE shoppingList SET amount = ?, price = ? WHERE id = ?', [amount, totalPrice, itemId], (error, results) => {
+            if (error) {
+                console.error("Error updating item:", error);
+                res.status(500).send(error);
+            } else {
+                if (results.affectedRows === 0) {
+                    console.log("Item not found:", itemId);
+                    res.status(404).send("Item not found");
+                } else {
+                    console.log("Item updated successfully:", itemId);
+                    res.status(200).send("Item updated successfully");
+                }
+            }
+        });
+    });
+});
 app.listen(port, ()=>{
     console.log(`Server listening on port: ${port}...`);
 });
