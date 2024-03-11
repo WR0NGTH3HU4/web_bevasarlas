@@ -8,8 +8,10 @@
     
     const shoppingList = ref()
     const FinalPrice = ref(0)
+
     onMounted(async () => {
         await fetchData();
+        console.log("Shopping list fetched:", shoppingList.value);
         calculateFinalPrice();
     });
 
@@ -22,18 +24,28 @@
         }
     };
 
-    const calculateFinalPrice = () => {
-        FinalPrice.value = shoppingList.value.reduce((acc, item) => acc + item.price, 0);
-    };
+    const calculateFinalPrice = (currentPrice) => {
+    try {
+        // Calculate the final price by summing up the prices of all items in the shopping list
+        FinalPrice.value = shoppingList.value.reduce((acc, item) => {
+            const itemPrice = parseFloat(item.price); // Convert the item price to a number
+            return acc + itemPrice;
+        }, 0);
+
+        // If the current price was passed, subtract it from the final price and add the new price
+        if (currentPrice !== undefined) {
+            FinalPrice.value += (parseFloat(item.price) - currentPrice);
+        }
+    } catch (error) {
+        console.error("An error occurred while calculating final price:", error);
+    }
+};
 
     const deleteRow = async (itemId) => {
         try {
             const response = await axios.delete(`http://localhost:3000/shoppingList/${itemId}`);
-
-            
             if (response.status === 200) {
                 console.log("Item deleted successfully:", itemId);
-                
                 await fetchData();
                 calculateFinalPrice();
             } else {
@@ -45,43 +57,35 @@
     };
 
     const updateAmount = async (item, value) => {
-    const newAmount = parseInt(value);
+        try {
+            const originalTotalPrice = item.price / item.amount;
+            console.log("Original total price:", originalTotalPrice);
 
-    try {
-        
-        const response = await axios.get(`http://localhost:3000/shoppingList/${item.id}`);
-        
-        if (response.status !== 200) {
-            console.error("Failed to fetch item details:", response.statusText);
-            return;
+            item.amount = value;
+            console.log("Updated item amount:", item.amount);
+
+            const newPrice = originalTotalPrice * value;
+            console.log("New calculated price:", newPrice);
+
+            item.price = newPrice;
+
+            await axios.put(`http://localhost:3000/shoppingList/${item.id}`, {
+                amount: item.amount,
+                price: item.price
+            });
+
+            console.log("Shopping list item updated:", item);
+
+            await fetchData();
+            calculateFinalPrice();
+        } catch (error) {
+            console.error("An error occurred while updating amount:", error);
         }
-
-        const unitPrice = response.data.price;
-        const totalPrice = unitPrice * newAmount; 
-
-        
-        const updateResponse = await axios.put(`http://localhost:3000/shoppingList/${item.id}`, { amount: newAmount, price: totalPrice }, {
-    timeout: 5000 
-});
-
-        if (updateResponse.status !== 200) {
-            console.error("Failed to update item amount and total price:", updateResponse.statusText);
-        } else {
-            
-            item.amount = newAmount;
-            item.price = totalPrice;
-            console.log("Item updated successfully:", item.id);
-            calculateFinalPrice(); 
-        }
-    } catch (error) {
-        console.error("An error occurred while updating item amount and total price:", error);
-    }
-    await fetchData(); 
-};
+    };
 </script>
+
 <template>
     <div class="container">
-        
         <ul class="head">
             <li>kategoria</li>
             <li>termeknev</li>
